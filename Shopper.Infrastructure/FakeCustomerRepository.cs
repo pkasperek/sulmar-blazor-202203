@@ -1,4 +1,6 @@
 using Bogus;
+using Bogus.DataSets;
+using Shopper.Domain.Extensions;
 using Shopper.Domain.Models;
 using Shopper.Domain.Repositories;
 
@@ -48,11 +50,10 @@ public class FakeCustomerRepository : ICustomerRepository
         return this.customer.TryGetValue(id, out var customer) ? Task.FromResult(customer) : Task.FromResult<Customer>(null);
     }
 
-    public Task<IEnumerable<Customer>?> GetByNameAsync(string firstName, string lastName)
+    public Task<IEnumerable<Customer>?> GetByNameAsync(string name)
     {
-        var list = customer.Values?.Where(p => p.FirstName.Equals(firstName, StringComparison.OrdinalIgnoreCase))
-            ?.Where(p => p.LastName.Equals(lastName, StringComparison.OrdinalIgnoreCase));
-
+        var list = customer.Values?.Where(p => p.Name().Contains(name, StringComparison.OrdinalIgnoreCase));
+        
         return Task.FromResult(list);    }
 
     public Task<IEnumerable<Customer>?> GetByFirstNameAsync(string firstName)

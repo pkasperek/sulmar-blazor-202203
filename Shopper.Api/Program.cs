@@ -20,6 +20,8 @@ builder.Services.AddSingleton<Faker<Product>, ProductFaker>();
 builder.Services.AddSingleton<ICustomerRepository, FakeCustomerRepository>();
 builder.Services.AddSingleton<Faker<Customer>, CustomerFaker>();
 
+builder.Se
+
 builder.Services.AddCors(
     policy => policy.AddDefaultPolicy(
     options => options.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
@@ -59,8 +61,8 @@ app.MapGet("api/customers", async
 app.MapGet("api/customers/{id:int}", async
     (ICustomerRepository customerRepository, int id) => await customerRepository.GetByIdAsync(id));
 
-app.MapGet("api/customers/lastname/{lastName}", async
-    (ICustomerRepository customerRepository, string lastName) => await customerRepository.GetByLastNameAsync(lastName));
+app.MapGet("api/customers/search", async
+    (ICustomerRepository customerRepository, string name) => await customerRepository.GetByNameAsync(name));
 
 
 app.Run();

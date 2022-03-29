@@ -6,7 +6,7 @@ public interface ICustomerRepository
 {
     Task<IEnumerable<Customer>> GetAsync();
     Task<Customer> GetByIdAsync(int id);
-    Task<IEnumerable<Customer>?> GetByNameAsync(string firstName, string lastName);
+    Task<IEnumerable<Customer>?> GetByNameAsync(string name);
     Task<IEnumerable<Customer>?> GetByFirstNameAsync(string firstName);
     Task<IEnumerable<Customer>?> GetByLastNameAsync(string lastName);
     Task<IEnumerable<Customer>> GetByGenderAsync(GenderType gender);

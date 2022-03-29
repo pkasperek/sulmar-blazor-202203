@@ -18,9 +18,9 @@ public class CustomerService : ICustomerService
         return await client.GetFromJsonAsync<IEnumerable<Customer>>("api/customers", token);
     }
 
-    public async Task<IEnumerable<Customer>?> GetByLastNameAsync(string lastName, CancellationToken token = default)
+    public async Task<IEnumerable<Customer>?> GetByNameAsync(string name, CancellationToken token = default)
     {
-        return await client.GetFromJsonAsync<IEnumerable<Customer>>($"api/customers/lastname/{lastName}", token);
+        return await client.GetFromJsonAsync<IEnumerable<Customer>>($"api/customers/search?name={name}", token);
     }
 
     public async Task<Customer?> GetByIdAsync(int id)
