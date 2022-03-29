@@ -17,4 +17,20 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Infrastructure\HTTP\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Infrastructure\HTTP\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Infrastructure\HTTP\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Infrastructure\HTTP\**" />
+  </ItemGroup>
+
 </Project>
