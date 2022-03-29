@@ -13,12 +13,12 @@ namespace Shopper.BlazorWebAssembly.Services
             this.client = client;
         }
 
-        public async Task<IEnumerable<Product>> GetAsync(CancellationToken token = default)
+        public async Task<IEnumerable<Product>?> GetAsync(CancellationToken token = default)
         {
             return await client.GetFromJsonAsync<IEnumerable<Product>>("api/products", token);
         }
 
-        public async Task<Product> GetByIdAsync(int id)
+        public async Task<Product?> GetByIdAsync(int id)
         {
             return await client.GetFromJsonAsync<Product>($"api/products/{id}");
         }

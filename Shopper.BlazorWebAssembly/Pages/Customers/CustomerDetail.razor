@@ -1,0 +1,31 @@
+﻿@page "/customers/{id:int}"
+@using Shopper.Domain.Extensions
+
+@inject ICustomerService customerService
+
+<h3>Product Details</h3>
+
+<div class="card" style="width: 28rem;">
+    <img src="@customer?.Avatar" class="card-img-top" alt="@customer?.Name()">
+    <div class="card-body">
+        <h5 class="card-title">@customer?.Name()</h5>
+    </div>
+    <div class="card-footer">
+        @customer?.Gender.ToString()
+    </div>
+</div>
+
+
+
+@code {
+    private Customer? customer;
+
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        customer = await customerService.GetByIdAsync(Id);
+    }
+
+}

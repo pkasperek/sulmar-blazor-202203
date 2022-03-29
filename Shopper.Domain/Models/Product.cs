@@ -12,5 +12,3 @@ public class Product : BaseEntity
     public string ImageLink { get; set; }
 
 }
-
-

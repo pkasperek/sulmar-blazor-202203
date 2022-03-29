@@ -1,0 +1,17 @@
+﻿@using Shopper.Domain.Extensions
+
+<tr>
+    <td>
+        <NavLink href="@($"customers/{Customer.Id}")">
+            @Customer.Name()
+        </NavLink>        
+    </td>
+    <td>@Customer.Gender</td>
+    <td><img src=@Customer.Avatar width="64" /></td>
+</tr>
+
+@code {
+
+    [Parameter]
+    public Customer Customer { get; set; }
+}

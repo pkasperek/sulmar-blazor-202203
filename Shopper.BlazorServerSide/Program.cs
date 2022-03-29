@@ -1,11 +1,4 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using Shopper.BlazorServerSide.Data;
-using Bogus;
-using Shopper.Domain.Models;
-using Shopper.Domain.Repositories;
-using Shopper.Infrastructure;
-using Shopper.Infrastructure.Fakers;
 using Shopper.BlazorServerSide.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);

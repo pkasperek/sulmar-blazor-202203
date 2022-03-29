@@ -1,0 +1,77 @@
+﻿@page "/customers"
+
+@inject ICustomerService customerService
+@implements IAsyncDisposable
+
+
+<h3>Customer List</h3>
+
+<SearchBarComponent OnSearch="HandleSearch" />
+
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Avatar</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @if (customers!=null && customers.Any())
+        {
+            @foreach (var customer in customers)
+            {
+                
+                <CustomerItemComponent Customer=@customer />
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="3" >Cannot find customers</td>
+            </tr>
+        }
+
+    </tbody>
+
+    <tfoot>
+        Quantity: @customers?.Count()
+    </tfoot>
+</table>
+
+@code {
+
+    private IEnumerable<Customer>? customers;
+
+    private CancellationTokenSource cts = new CancellationTokenSource();
+
+    protected override async Task OnInitializedAsync()
+    {
+        customers = await customerService.GetAsync(cts.Token);
+    }
+
+    
+    private async Task HandleSearch(string filter)
+    {
+        if (string.IsNullOrEmpty(filter))
+        {
+            customers = await customerService.GetAsync();
+        }
+        else
+        {
+            customers = await customerService.GetByLastNameAsync(filter);
+            
+        }
+        
+        StateHasChanged();
+    }
+    
+    public async ValueTask DisposeAsync()
+    {
+        cts.Cancel();
+        cts.Dispose();
+    }
+}

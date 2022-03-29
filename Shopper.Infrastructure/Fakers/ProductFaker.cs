@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using Bogus.DataSets;
 using Shopper.Domain.Models;
 
 namespace Shopper.Infrastructure.Fakers;

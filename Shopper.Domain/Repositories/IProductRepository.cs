@@ -13,4 +13,3 @@ public interface IProductRepository
 
     Task<IEnumerable<Product>> GetByColor(string color);
 }
-
