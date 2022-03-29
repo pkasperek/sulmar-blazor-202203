@@ -1,0 +1,21 @@
+@code {
+    public string? filter;
+    
+    [Parameter]
+    public EventCallback<string> OnSearch { get; set; }
+
+    private void Search()
+    {
+        OnSearch.InvokeAsync(filter);
+    }
+}
+
+<div>
+    <form class="form-inline">
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="filter" class="sr-only">Search</label>
+            <input type="text" class="form-control" id="inputPassword2" placeholder="Password">
+        </div>
+        <button type="button" @onclick="Search" class="btn btn-primary mb-2">Search</button>
+    </form>
+</div>

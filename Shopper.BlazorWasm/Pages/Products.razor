@@ -1,0 +1,17 @@
+@page "/products"
+@using Shopper.BlazorWasm.Services
+@using Shopper.Domain.Models
+
+@inject IProductService productService
+
+<h3>Products</h3>
+
+@code {
+    private IEnumerable<Product>? products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await productService.GetAsync();
+    }
+
+}

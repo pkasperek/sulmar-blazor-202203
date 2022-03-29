@@ -1,0 +1,54 @@
+﻿@page "/products"
+@using Shopper.Infrastructure.Repositories
+@inject IProductRepository productRepository
+
+@code
+{
+    private IEnumerable<Product>? products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await productRepository.GetAsync();
+    }
+
+    private async Task HandlerSearch(string filter)
+    {
+        if (!string.IsNullOrEmpty(filter))
+        {
+            products = await productRepository.GetByColor(filter);
+        }
+    }
+}
+
+<h3>Products</h3>
+
+<SearchBarComponent OnSearch="HandlerSearch"/>
+
+
+<table class="table table-light table-hover">
+    <thead>
+        <tr>
+            <th scope="col"> Name </th>
+            <th scope="col"> Price</th>
+            <th scope="col"> Color</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (products.Any())
+        {
+            @foreach (var product in products)
+            {
+                <ProductItemComponent Product=@product />
+            }
+        }
+        else
+        {
+            <tr>
+                <td>Cannot items</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        Quantity: @products.Count()
+    </tfoot>
+</table>

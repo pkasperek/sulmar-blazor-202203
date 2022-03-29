@@ -1,0 +1,17 @@
+@using Shopper.Domain.Models
+<tr>
+    <td>
+        <NavLink href="@($"products/{Product?.Id}")" >
+            @Product.Name
+        </NavLink>
+    </td>
+    
+    <td>@Product?.Price</td>                
+    <td>@Product?.Color</td>                
+</tr>
+
+@code
+{
+    [Parameter]
+    public Product? Product { get; set; }
+}

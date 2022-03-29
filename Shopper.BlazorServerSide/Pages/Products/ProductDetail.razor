@@ -1,0 +1,30 @@
+@page "/products/{id:int}"
+@using Shopper.Infrastructure.Repositories
+@inject IProductRepository productRepository
+
+@code {
+
+    private Product? product;
+    
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        product = await productRepository.GetByIdAsync(Id);
+    }
+
+}
+
+<h3>Product: @product?.Name</h3>
+
+<div class="card" style="width: 28rem;">
+    <img src=@product?.ImageLink class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">@product?.Name</h5>
+        <p class="card-text">@product?.Description</p>
+    </div>
+    <div class="card-footer">
+        @product?.Price.ToString("C")
+    </div>
+</div>
