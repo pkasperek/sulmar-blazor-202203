@@ -5,8 +5,13 @@ using Shopper.Domain.Repositories;
 using Shopper.Infrastructure;
 using Shopper.Infrastructure.Fakers;
 using System.Text.Json.Serialization;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, configuration) => configuration
+    .ReadFrom.Configuration(context.Configuration));
+
 
 builder.Services.AddSingleton<IProductRepository, FakeProductRepository>();
 builder.Services.AddSingleton<Faker<Product>, ProductFaker>();
@@ -15,6 +20,8 @@ builder.Services.AddSingleton<ICustomerRepository, FakeCustomerRepository>();
 builder.Services.AddSingleton<Faker<Customer>, CustomerFaker>();
 
 builder.Services.AddEndpointsApiExplorer();
+
+
 
 // Install-Package Swashbuckle.AspNetCore - Version 6.2.3
 builder.Services.AddSwaggerGen();
@@ -39,6 +46,8 @@ builder.Services.AddCors(
 var app = builder.Build();
 
 app.UseCors();
+
+app.UseSerilogIngestion();
 
 app.MapGet("/", () => "Hello World!");
 
