@@ -1,0 +1,49 @@
+﻿@inject IProductService productService
+@inject NavigationManager navigationManager
+@inject IConfiguration configuration
+
+@page "/products/edit/{id:int}"
+
+<h3>Product Edit</h3>
+
+@if (product != null)
+{
+    <EditForm Model="@product" OnValidSubmit="HandleValidSubmit">
+
+        <label for="name">Name</label>
+        <InputText id="name" @bind-Value="product.Name" />
+
+        <label for="color">Color</label>
+        <InputText id="color" @bind-Value="product.Color" />
+
+        <label for="price">Price</label>
+        <InputNumber id="price" @bind-Value="product.Price" />
+
+        <button type="submit">Save</button>
+
+    </EditForm>
+}
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    private Product product;
+    
+    private string mainPageLink => configuration["Routing:Product:mainPage"]; 
+
+    protected override async Task OnParametersSetAsync()
+    {
+        product = await productService.GetByIdAsync(Id);
+
+        StateHasChanged();
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        await productService.UpdateAsync(product);
+        navigationManager.NavigateTo($"/{mainPageLink}");
+    }
+
+}

@@ -1,17 +1,38 @@
-﻿
+﻿@inject NavigationManager navigationManager
+@inject IConfiguration configuration
+
 <tr>
     <td>
         <NavLink href="@($"products/edit/{Product.Id}")">
             @Product.Name
-        </NavLink>        
+        </NavLink>
     </td>
 
     <td>@Product.Color</td>
     <td>@Product.Price</td>
+    <td>
+        <div>
+            @{ var callLink = configuration["Routing:Product:editPage"];}
+            <NavLink class="btn btn-primary btn-circle" href="@($"{@callLink}/{@Product.Id}")">
+                <span class="oi oi-plus" aria-hidden="true"></span>
+            </NavLink>
+
+            @* <button class="btn btn-primary btn-circle" title="Edit" @onclick="Edit"> *@
+            @*     <span class="oi oi-plus" aria-hidden="true"></span> *@
+            @* </button> *@
+        </div>
+    </td>
 </tr>
 
 @code {
 
     [Parameter]
     public Product Product { get; set; }
+
+    private string editPageLink => configuration["Routing:Product:editPage"]; 
+    
+    private void Edit()
+    {
+        navigationManager.NavigateTo($"{editPageLink}/{Product.Id}");
+    }
 }
