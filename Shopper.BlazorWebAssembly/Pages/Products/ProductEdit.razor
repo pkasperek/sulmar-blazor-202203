@@ -1,5 +1,6 @@
 ﻿@inject IProductService productService
 @inject NavigationManager navigationManager
+@inject IConfiguration configuration
 
 @page "/products/edit/{id:int}"
 
@@ -29,6 +30,8 @@
     public int Id { get; set; }
 
     private Product product;
+    
+    private string mainPageLink => configuration["Routing:Product:mainPage"]; 
 
     protected override async Task OnParametersSetAsync()
     {
@@ -40,10 +43,7 @@
     private async Task HandleValidSubmit()
     {
         await productService.UpdateAsync(product);
-
-        navigationManager.NavigateTo("/products");
+        navigationManager.NavigateTo($"/{mainPageLink}");
     }
-
-
 
 }
